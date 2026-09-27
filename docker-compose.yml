@@ -1,0 +1,20 @@
+services:
+  api:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - JWT_SECRET=local-docker-secret-change-me
+      - DATABASE_URL=sqlite:///./data/credora.db
+    volumes:
+      - credora_data:/app/data
+
+  web:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+
+volumes:
+  credora_data:
